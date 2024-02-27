@@ -1,6 +1,6 @@
 
 <template>
-    <button>
+    <button @click="$emit('play')">
         <img src="~/assets/images/icons/play.svg" alt="Play">
     </button>
 </template>

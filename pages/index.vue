@@ -4,10 +4,12 @@
 
       <HowToPlayMain v-if="showRules" @back="showRules = false" key="rules" />
 
+      <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories" />
+
       <div v-else class="main-container" key="main">
         <img class="logo" src="../assets/images/logo.svg" alt="Logo">
         <div class="buttons">
-          <ButtonPlay />
+          <ButtonPlay @play="showCategories = true" />
           <ButtonMain text="how to play" @click="showRules = true" />
         </div>
       </div>
@@ -22,7 +24,7 @@
 
 <script setup>
 const showRules = ref(false);
-
+const showCategories = ref(false);
 </script>
 
 <style lang="scss" scoped>
