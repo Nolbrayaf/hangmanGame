@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Mouse Memoirs';
+    src: url("../fonts/MouseMemoirs-Regular.ttf");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Mouse Memoirs', sans-serif;
+    background-image: url('../images/backgrounds/desktop.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    caret-color: transparent;
+}
+
+// Desktop Screens
+
+.headingXL {
+    font-size: 136px;
+    line-height: 120%;
+    letter-spacing: 0.05em;
+}
+
+.headingL {
+    font-size: 88px;
+    line-height: 120%;
+    letter-spacing: 0.05em;
+}
+
+.headingM {
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: 0.05em;
+}
+
+.headingS {
+    font-style: normal;
+    font-size: 32px;
+    line-height: 120%;
+    letter-spacing: 0.05em;
+}
+
+.body {
+    font-size: 26px;
+    line-height: 120%;
+    letter-spacing: 0.05em;
+}
+
+@media screen and (max-width: $tablet-breakpoint) {
+    body{
+        background-image: url('../images/backgrounds/tablet.svg');
+    }
+}
+
+@media screen and (max-width: $sm-breakpoint) {
+    body{
+        background-image: url('../images/backgrounds/mobile.svg');
+    }
+}
+
+
