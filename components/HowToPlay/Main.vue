@@ -3,7 +3,7 @@
         <div class="header-how-to-play">
 
             <ButtonBack class="backButton" @click="$emit('back')" />
-            <h2 class="headingXL title">How to Play</h2>
+            <h2 class="headingXL title" data-text="How to Play">How to Play</h2>
             <div class="empty"></div>
         </div>
         <section class="rules">
@@ -60,25 +60,7 @@ const rules = ref([
         width: 100%;
 
 
-        .title {
-            position: relative;
-            background: linear-gradient(180deg, #67B6FF 16.42%, #FFFFFF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-            margin: 0;
 
-            &::before {
-                content: 'How to Play';
-                position: absolute;
-                left: 0;
-                -webkit-text-stroke: 18px #243041;
-                z-index: -1;
-            }
-
-        }
     }
 
     .rules {

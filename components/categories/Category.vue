@@ -1,7 +1,7 @@
 
 <template>
     <button class="headingM">
-       {{ category }}
+        {{ category }}
     </button>
 </template>
 
@@ -14,7 +14,8 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-button{
+button {
+    position:relative;
     margin: 0;
     padding: 0;
     border: none;
@@ -30,25 +31,47 @@ button{
     cursor: pointer;
     text-align: center;
 
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0px;
+        bottom: 7px;
+        left: 5px;
+        right: 5px;
+        border-radius: inherit;
+        background-color: rgba(255, 255, 255, 0);
+        transition: background-color 0.3s ease;
+        border-radius: 40px;
+    }
 
+    &:hover::after {
+        position: absolute;
+        content: '';
+        top: 0px;
+        bottom: 7px;
+        left: 5px;
+        right: 5px;
+        background-color: rgba(255, 255, 255, 0.20);
+    }
 }
 
 
 @media screen and (max-width: $desktop-breakpoint) {
 
-button{
-    min-width: 324px;
-    
-}
+    button {
+        min-width: 324px;
+
+    }
 }
 
 @media screen and (max-width: $tablet-breakpoint) {
-    button{
+    button {
         width: 100%;
         max-width: unset;
         min-width: unset;
         height: fit-content;
         font-size: 24px;
+        min-height: 64px;
     }
 }
 </style>

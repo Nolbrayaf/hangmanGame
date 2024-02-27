@@ -1,10 +1,14 @@
 <template>
   <main>
+
     <transition name="fade" mode="out-in">
 
       <HowToPlayMain v-if="showRules" @back="showRules = false" key="rules" />
 
-      <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories" />
+      <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories"
+        @choose="handleCategoryChoose" />
+
+      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" :gameWord="gameWord" />
 
       <div v-else class="main-container" key="main">
         <img class="logo" src="../assets/images/logo.svg" alt="Logo">
@@ -15,16 +19,39 @@
       </div>
     </transition>
 
-
-
-
-
   </main>
 </template>
 
 <script setup>
+import { categories } from '~/data.json'
+
 const showRules = ref(false);
 const showCategories = ref(false);
+const showGame = ref(true);
+const gameWord = ref("United Kingdom");
+const choosenCategory = ref("Countries");
+
+
+function handleCategoryChoose(category) {
+  showCategories.value = false
+  showGame.value = true
+  choosenCategory.value = category
+  randomWord(category)
+
+}
+
+function wordsByCategory(data) {
+  return categories[data]
+}
+
+function randomWord(data) {
+  const words = wordsByCategory(data);
+  gameWord.value = words[Math.floor(Math.random() * words.length)].name
+
+}
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -61,10 +88,7 @@ main {
       gap: 32px;
       padding-bottom: 64px;
     }
-
   }
-
-
 }
 
 .fade-enter-active,
@@ -86,7 +110,7 @@ main {
       justify-content: center;
       padding-top: 64px;
       width: 324px;
-    height: 481px;
+      height: 481px;
 
       .buttons {
         gap: 64px;

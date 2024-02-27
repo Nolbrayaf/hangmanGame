@@ -56,6 +56,26 @@ body {
     letter-spacing: 0.05em;
 }
 
+.title {
+    position: relative;
+    background: linear-gradient(180deg, #67B6FF 16.42%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin: 0;
+
+    &::before {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        -webkit-text-stroke: 18px #243041;
+        z-index: -1;
+    }
+
+}
+
 @media screen and (max-width: $tablet-breakpoint) {
     body{
         background-image: url('../images/backgrounds/tablet.svg');

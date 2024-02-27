@@ -3,11 +3,11 @@
         <div class="header-categories">
 
             <ButtonBack class="backButton" @click="$emit('back')" />
-            <h2 class="headingXL title">Pick a Categories</h2>
+            <h2 class="headingXL title" data-text="Pick a Categories">Pick a Categories</h2>
             <div class="empty"></div>
         </div>
         <section class="categories">
-            <categoriesCategory v-for="category in categoryNames" :category="category" :key="category" class="category" />
+            <categoriesCategory v-for="category in categoryNames" :category="category" :key="category" class="category" @click="$emit('choose', category)" />
         </section>
         <div class="degradBackground"></div>
     </div>
@@ -37,25 +37,6 @@ const categoryNames = ref(Object.keys(categories))
         width: 100%;
 
 
-        .title {
-            position: relative;
-            background: linear-gradient(180deg, #67B6FF 16.42%, #FFFFFF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-            margin: 0;
-
-            &::before {
-                content: 'Pick a Categories';
-                position: absolute;
-                left: 0;
-                -webkit-text-stroke: 18px #243041;
-                z-index: -1;
-            }
-
-        }
     }
 
     section {
