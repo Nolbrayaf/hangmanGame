@@ -1,6 +1,6 @@
 
 <template>
-    <button @click="$emit('play')">
+    <button @click="$emit('pause')">
         <img src="~/assets/images/icons/menu.svg" alt="Play">
     </button>
 </template>
@@ -22,8 +22,8 @@ button {
     background: $pink-gradient;
     box-shadow:  inset 0 -6px 0 7px rgba(157,45,245,0.25);
     border-radius: 999px;
-    width: 94px;
-    height: 94px;
+    width: 9.4rem;
+    height: 9.4rem;
     cursor: pointer;
 
     &::after {
@@ -50,10 +50,27 @@ button {
     }
 }
 
-@media screen and (max-width: $sm-breakpoint) {
+@media screen and (max-width: $desktop-breakpoint) {
     button{
-        width: 160px;
-        height: 160px;
+        width: 6.4rem;
+        height: 6.4rem;
+
+        img{
+            width: 2.5rem;
+            height: 2.1rem;
+        }
+    }
+}
+
+@media screen and (max-width: $tablet-breakpoint) {
+    button{
+        width: 4.8rem;
+        height: 4.8rem;
+
+        img{
+            width: 2rem;
+            height: 1.6rem;
+        }
     }
 }
 </style>

@@ -21,8 +21,8 @@ button {
     color: inherit;
     background: $pink-gradient;
     border-radius: 999px;
-    width: 94px;
-    height: 94px;
+    width: 9.4rem;
+    height: 9.4rem;
     cursor: pointer;
 
     &::after {
@@ -51,22 +51,22 @@ button {
 
 @media screen and (max-width: $tablet-breakpoint) {
     button{
-        width: 64px;
-        height: 64px;
+        width: 6.4rem;
+        height: 6.4rem;
         img{
-            width: 27px;
-            height: 25px;
+            width: 2.7rem;
+            height: 2.5rem;
         }
     }
 }
 
 @media screen and (max-width: $sm-breakpoint) {
     button{
-        width: 40px;
-        height: 40px;
+        width: 4rem;
+        height: 4rem;
         img{
-            width: 17px;
-            height: 16px;
+            width: 1.7rem;
+            height: 1.6rem;
         }
     }
     

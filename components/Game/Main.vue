@@ -1,62 +1,69 @@
 
-import type { start } from 'repl';
-
-import type { GameWord } from '#build/components';
-
-import type { GameWord } from '#build/components';
 <template>
-    <div v-if="hpLeft && category" class="container-game" >
-    <header>
-        <div class="header-left-section">
-            <ButtonMenu/>
-            <h2 class="headingL" :data-text="category">{{ category }}</h2>
-        </div>
-        <div class="header-right-section">
-        <GameHpbar  :hpLeft="hpLeft" />
-        <img src="~/assets/images/icons/heart.svg" alt="Logo">
-        </div>
+    <div v-if="gameWord && category && alphabet" class="container-game">
+        <header>
+            <div class="header-left-section">
+                <ButtonMenu @pause="showPauseMenu = true" />
+                <h2 class="headingL" :data-text="category">{{ category }}</h2>
+            </div>
+            <div class="header-right-section">
+                <GameHpbar :hpLeft="hpLeft" />
+                <img src="~/assets/images/icons/heart.svg" alt="Heart">
+            </div>
 
-    </header>
+        </header>
 
-    <GameWord v-if="gameWord" :gameWord="gameWord" />
-</div>
+        <GameWord v-if="gameWord" :gameWord="gameWord" />
+
+        <GameBoard :alphabet="alphabet" />
+    </div>
     <div class="degradBackground"></div>
 </template>
 <script setup>
 defineProps({
     category: String,
-    gameWord: String
+    gameWord: String,
+    alphabet: Array
 
 
 })
-const hpLeft = ref(5);
+const hpLeft = ref(8);
 </script>
 <style lang="scss" scoped>
-
-.container-game{
+.container-game {
     width: 100%;
     height: 100%;
-    padding: 60px 112px;
-    display:flex;
-    flex-direction: column;
-    
-    header {
-    color: $white;
+    padding: 2.4rem 11.2rem 0 11.2rem;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    .header-left-section {
-        display: flex;
-        align-items: center;
-        gap: 57px;
-    }
+    flex-direction: column;
+    gap: 5rem;
 
-    .header-right-section {
+    header {
+        color: $white;
         display: flex;
-        align-items: center;
-        gap: 40px;
+        justify-content: space-between;
+        width: 100%;
+
+
+        .header-left-section {
+            display: flex;
+            align-items: center;
+            gap: 5.7rem;
+
+            h2 {
+                margin: 0;
+            }
+
+        }
+
+        .header-right-section {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+
+        }
     }
-}}
+}
 
 
 
@@ -70,5 +77,62 @@ const hpLeft = ref(5);
     background: linear-gradient(180deg, #1A043A 0%, #151278 70.31%, #2B1677 100%);
     opacity: 0.75;
     z-index: -1;
+}
+
+@media screen and (max-width: $desktop-breakpoint) {
+    .container-game {
+        padding: 2.4rem 5rem;
+        justify-content: space-between;
+
+        header{
+            .header-left-section {
+                gap: 4rem;
+                h2 {
+                    font-size: 4.8rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .container-game {
+        padding: 2.4rem;
+
+        header{
+            .header-left-section {
+                gap: 3.2rem;
+                h2 {
+                    font-size: 4.8rem;
+                }
+            }
+        }
+    }
+    
+}
+
+@media screen and (max-width: $tablet-breakpoint) {
+    .container-game {
+
+        padding: 1.2rem;
+        
+        header{
+            .header-left-section {
+                gap: 1.6rem;
+                h2 {
+                    font-size: 3.2rem;
+                }
+            }
+
+            .header-right-section {
+                gap: 1.6rem;
+
+                img{
+                    width: 4.8rem;
+                    height: 4.8rem;
+                }
+            }
+        }
+    }
 }
 </style>

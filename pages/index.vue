@@ -8,7 +8,7 @@
       <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories"
         @choose="handleCategoryChoose" />
 
-      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" :gameWord="gameWord" />
+      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" :gameWord="gameWord" :alphabet="generateAlphabet()" />
 
       <div v-else class="main-container" key="main">
         <img class="logo" src="../assets/images/logo.svg" alt="Logo">
@@ -28,8 +28,8 @@ import { categories } from '~/data.json'
 const showRules = ref(false);
 const showCategories = ref(false);
 const showGame = ref(true);
-const gameWord = ref("United Kingdom");
-const choosenCategory = ref("Countries");
+const gameWord = ref("The Lion king");
+const choosenCategory = ref("Country");
 
 
 function handleCategoryChoose(category) {
@@ -50,6 +50,23 @@ function randomWord(data) {
 
 }
 
+function generateAlphabet() {
+  const alphabet = [];
+  const group = [];
+  for (let i = 65; i <= 90; i++) {
+    group.push(String.fromCharCode(i))
+  }
+  for (let i = 0; i < group.length; i += 9) {
+    alphabet.push(group.slice(i, i + 9));
+  }
+  return alphabet;
+  
+  return alphabet
+}
+
+
+
+console.log(generateAlphabet());
 
 
 </script>
@@ -68,10 +85,10 @@ main {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    gap: 64px;
+    gap: 6.4rem;
     background: $blue-gradient;
-    width: 592px;
-    height: 500px;
+    width: 59.2rem;
+    height: 50rem;
     border-radius: 72px;
     box-shadow: inset 0 -8px 0 4px #140E66, inset 0 6px 0 8px #2463FF;
 
@@ -85,8 +102,8 @@ main {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 32px;
-      padding-bottom: 64px;
+      gap: 3.2rem;
+      padding-bottom: 6.4rem;
     }
   }
 }
@@ -103,21 +120,22 @@ main {
 }
 
 
+
 @media screen and (max-width: $sm-breakpoint) {
   main {
     .main-container {
 
       justify-content: center;
-      padding-top: 64px;
-      width: 324px;
-      height: 481px;
+      padding-top: 6.4rem;
+      width: 32.4rem;
+      height: 48.1rem;
 
       .buttons {
-        gap: 64px;
+        gap: 6.4rem;
       }
 
       .logo {
-        width: 200px;
+        width: 20rem;
         top: -10%;
 
       }

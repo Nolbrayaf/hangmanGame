@@ -22,8 +22,8 @@ button {
     background: $pink-gradient;
     box-shadow: inset 0 -4px 0 5px #243041, inset 0 -12px 0 11px #9D2DF5;
     border-radius: 999px;
-    width: 200px;
-    height: 200px;
+    width: 20rem;
+    height: 20rem;
     cursor: pointer;
 
     &::after {
@@ -52,8 +52,8 @@ button {
 
 @media screen and (max-width: $sm-breakpoint) {
     button{
-        width: 160px;
-        height: 160px;
+        width: 16rem;
+        height: 16rem;
     }
 }
 </style>

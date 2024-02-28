@@ -35,7 +35,7 @@ article {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 40px;
+        gap: 4rem;
         width: 100%;
     }
 
@@ -64,18 +64,18 @@ article {
 
 @media screen and (max-width: $desktop-breakpoint) {
     h4 {
-        font-size: 40px;
+        font-size: 4rem;
     }
 
     p {
-        font-size: 20px;
+        font-size: 2rem;
     }
 
     article {
         .description {
             align-items: flex-start;
             text-align: start;
-            gap: 10px
+            gap: 1rem;
         }
     }
 }
@@ -83,15 +83,15 @@ article {
 @media screen and (max-width: $tablet-breakpoint) {
 
     h3 {
-        font-size: 40px;
+        font-size: 4rem;
     }
 
     h4 {
-        font-size: 32px;
+        font-size: 3.2rem;
     }
 
     p {
-        font-size: 16px;
+        font-size: 1.6rem;
     }
 
 }
@@ -99,20 +99,20 @@ article {
 @media screen and (max-width: 640px) {
     article {
 
-        gap: 20px;
+        gap: 2rem;
 
         .title {
             display: flex;
 
-            gap: 16px;
+            gap: 1.6rem;
              h3 {
                 align-self: start;
-                font-size: 24px;
+                font-size: 2.4rem;
             }
 
             h4 {
                 display: block;
-                font-size: 24px;
+                font-size: 2.4rem;
             }
         }
 
@@ -127,7 +127,7 @@ article {
             }
 
             p {
-                font-size: 14px;
+                font-size: 1.4rem;
             }
         }
     }

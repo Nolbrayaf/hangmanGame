@@ -3,9 +3,14 @@
     src: url("../fonts/MouseMemoirs-Regular.ttf");
 }
 
+
+html {
+    font-size: 62.5%;
+}
+
 * {
     box-sizing: border-box;
-    
+
 }
 
 body {
@@ -26,32 +31,32 @@ body {
 // Desktop Screens
 
 .headingXL {
-    font-size: 136px;
+    font-size: 13.6rem;
     line-height: 120%;
     letter-spacing: 0.05em;
 }
 
 .headingL {
-    font-size: 88px;
+    font-size: 8.8rem;
     line-height: 120%;
     letter-spacing: 0.05em;
 }
 
 .headingM {
-    font-size: 48px;
+    font-size: 4.8rem;
     line-height: 120%;
     letter-spacing: 0.05em;
 }
 
 .headingS {
     font-style: normal;
-    font-size: 32px;
+    font-size: 3.2rem;
     line-height: 120%;
     letter-spacing: 0.05em;
 }
 
 .body {
-    font-size: 26px;
+    font-size: 2.6rem;
     line-height: 120%;
     letter-spacing: 0.05em;
 }
@@ -70,22 +75,20 @@ body {
         content: attr(data-text);
         position: absolute;
         left: 0;
-        -webkit-text-stroke: 18px #243041;
+        -webkit-text-stroke: 1.8rem #243041;
         z-index: -1;
     }
 
 }
 
 @media screen and (max-width: $tablet-breakpoint) {
-    body{
+    body {
         background-image: url('../images/backgrounds/tablet.svg');
     }
 }
 
 @media screen and (max-width: $sm-breakpoint) {
-    body{
+    body {
         background-image: url('../images/backgrounds/mobile.svg');
     }
 }
-
-

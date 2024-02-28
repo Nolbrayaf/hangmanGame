@@ -25,8 +25,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    padding: 12px 64px;
+    gap: 0.8rem;
+    padding: 1.2rem 6.4rem;
     color: $white;
     border-radius: 40px;
     box-shadow: inset 0 -2px 0 3px #140E66, inset 0 1px 0 6px #3C74FF;

@@ -49,7 +49,7 @@ const rules = ref([
     align-items: center;
     width: 100vw;
     height: 100vh;
-    gap: 40px;
+    gap: 4rem;
 
 
     .header-how-to-play {
@@ -65,7 +65,7 @@ const rules = ref([
 
     .rules {
         display: flex;
-        gap: 32px;
+        gap: 3.2rem;
         height: fit-content;
         width: 100%;
         justify-content: center;
@@ -75,10 +75,10 @@ const rules = ref([
             flex-direction: column;
             background-color: $white;
             border-radius: 40px;
-            width: 384px;
-            height: 550px;
-            gap: 40px;
-            padding: 12px 42px;
+            width: 38.4rem;
+            height: 55rem;
+            gap: 4rem;
+            padding: 1.2rem 4.2rem;
             text-align: center;
             justify-content: center;
 
@@ -161,17 +161,17 @@ const rules = ref([
         .header-how-to-play {
 
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 2.4rem;
 
             .title {
-                font-size: 48px;
+                font-size: 4.8rem;
 
             }
         }
 
         .rules {
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 2.4rem;
             height: 100%;
 
             .rule {
