@@ -1,13 +1,18 @@
 
-import type { relative } from 'path';
 <template>
-    <button class="headingS">{{ props.text.toUpperCase() }}</button>
+    <button class="headingS" @click="emitEvents">{{ props.text.toUpperCase() }}</button>
 </template>
 <script setup>
 
 const props = defineProps({
     text: String
 })
+
+const $emit = defineEmits(['resume', 'newCategory']);
+const emitEvents = () => {
+  $emit('resume');
+  $emit('newCategory');
+};
 
 </script>
 

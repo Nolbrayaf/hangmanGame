@@ -1,13 +1,20 @@
 
 <template>
-    <div :class="letter !== ' ' ? 'letter headingL' : 'space'">
+
+    
+    <div v-if="isCorrect || letter === ' '" :class="letter !== ' ' ? 'letter headingL' : 'space'">
         {{ letter.toUpperCase() }}
+    </div>
+
+    <div v-else class="letter headingL transparent">
+        #
     </div>
 </template>
 <script setup>
 
 defineProps({
-    letter: String
+    letter: String,
+    isCorrect: Boolean
 })
 
 </script>
@@ -25,7 +32,7 @@ defineProps({
     box-shadow: inset 0px -2px 0px 3px #140E66, inset 0px 1px 0px 6px #3C74FF;
     max-width: 11.2rem;
     max-height: 11.8rem;
-
+    
 }
 
 .space {
@@ -33,6 +40,11 @@ defineProps({
     box-shadow: none;
     width: 10rem;
 
+}
+
+.transparent {
+    color: transparent;
+    opacity: 25%;
 }
 
 

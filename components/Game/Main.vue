@@ -13,21 +13,53 @@
 
         </header>
 
-        <GameWord v-if="gameWord" :gameWord="gameWord" />
+        <GameWord v-if="gameWord" :gameWord="gameWord" :correctLetters="correctLetters" />
 
-        <GameBoard :alphabet="alphabet" />
+        <GameBoard :alphabet="alphabet" @clickLetter="handleClickLetter" />
     </div>
     <div class="degradBackground"></div>
+<transition name="fade">
+    <GamePauseMenu v-if="showPauseMenu" @newCategory="handleNewCategory"  @resume="handleResume" class="pause-menu" />
+
+</transition>
 </template>
 <script setup>
-defineProps({
+const props = defineProps({
     category: String,
     gameWord: String,
     alphabet: Array
 
 
 })
+
+const $emit = defineEmits(['newCategory']);
+
+const showPauseMenu = ref(false);
 const hpLeft = ref(8);
+const correctLetters = ref([]);
+
+function handleClickLetter(letter) {
+    if (props.gameWord.includes(letter) && !correctLetters.value.includes(letter)) {
+        correctLetters.value.push(letter);
+    } else {
+        if (!correctLetters.value.includes(letter)) {
+
+            hpLeft.value -= 1
+        }
+    }
+    console.log(correctLetters.value)
+}
+
+const handleNewCategory = () => {
+  showPauseMenu.value = false;
+  $emit('newCategory');
+};
+
+const handleResume = () => {
+  showPauseMenu.value = false;
+};
+
+
 </script>
 <style lang="scss" scoped>
 .container-game {
@@ -79,14 +111,35 @@ const hpLeft = ref(8);
     z-index: -1;
 }
 
+.pause-menu {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+
+
 @media screen and (max-width: $desktop-breakpoint) {
     .container-game {
         padding: 2.4rem 5rem;
         justify-content: space-between;
 
-        header{
+        header {
             .header-left-section {
                 gap: 4rem;
+
                 h2 {
                     font-size: 4.8rem;
                 }
@@ -99,26 +152,28 @@ const hpLeft = ref(8);
     .container-game {
         padding: 2.4rem;
 
-        header{
+        header {
             .header-left-section {
                 gap: 3.2rem;
+
                 h2 {
                     font-size: 4.8rem;
                 }
             }
         }
     }
-    
+
 }
 
 @media screen and (max-width: $tablet-breakpoint) {
     .container-game {
 
         padding: 1.2rem;
-        
-        header{
+
+        header {
             .header-left-section {
                 gap: 1.6rem;
+
                 h2 {
                     font-size: 3.2rem;
                 }
@@ -127,7 +182,7 @@ const hpLeft = ref(8);
             .header-right-section {
                 gap: 1.6rem;
 
-                img{
+                img {
                     width: 4.8rem;
                     height: 4.8rem;
                 }

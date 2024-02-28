@@ -8,7 +8,7 @@
       <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories"
         @choose="handleCategoryChoose" />
 
-      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" :gameWord="gameWord" :alphabet="generateAlphabet()" />
+      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" @newCategory="handleNewCategory"  :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()" />
 
       <div v-else class="main-container" key="main">
         <img class="logo" src="../assets/images/logo.svg" alt="Logo">
@@ -27,16 +27,21 @@ import { categories } from '~/data.json'
 
 const showRules = ref(false);
 const showCategories = ref(false);
-const showGame = ref(true);
+const showGame = ref(false);
 const gameWord = ref("The Lion king");
 const choosenCategory = ref("Country");
 
+const handleNewCategory = () => {
+  showGame.value = false;
+  showCategories.value = true;
 
+  console.log(showCategories.value)
+}
 function handleCategoryChoose(category) {
-  showCategories.value = false
-  showGame.value = true
-  choosenCategory.value = category
-  randomWord(category)
+  showCategories.value = false;
+  showGame.value = true;
+  choosenCategory.value = category;
+  randomWord(category);
 
 }
 
@@ -60,13 +65,9 @@ function generateAlphabet() {
     alphabet.push(group.slice(i, i + 9));
   }
   return alphabet;
-  
-  return alphabet
 }
 
 
-
-console.log(generateAlphabet());
 
 
 </script>

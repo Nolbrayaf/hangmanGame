@@ -1,5 +1,5 @@
 <template>
-    <button class="headingM">{{ letter }}</button>
+    <button class="headingM" @click="$emit('clickLetter', letter)">{{ letter }}</button>
 </template>
 <script setup>
 
