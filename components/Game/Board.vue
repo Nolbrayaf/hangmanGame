@@ -1,7 +1,7 @@
 <template>
     <div v-if="alphabet.length > 0" class="board">
         <div v-for="(group, index) in alphabet" :key="index" class="letter-group">
-            <GameBoardLetter v-for="letter in group" :key="letter" :letter="letter" @clickLetter="$emit('clickLetter', letter)" />
+            <GameBoardLetter v-for="letter in group" :key="letter" :letter="letter" @clickLetter="$emit('clickLetter', letter)" :disabled="usedLetters.includes(letter)" />
         </div>
     </div>
 </template>
@@ -10,7 +10,8 @@
 <script setup>
 
 defineProps({
-    alphabet: Array
+    alphabet: Array,
+    usedLetters: Array
 })
 
 

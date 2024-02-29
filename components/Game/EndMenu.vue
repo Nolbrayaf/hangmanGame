@@ -2,7 +2,7 @@
     <div class="background">
         <div class="container">
             <header class="header">
-                <h2 class="title" data-text="Paused">Paused</h2>
+                <h2 class="title" :data-text=" won ? 'You Win' : 'You Lose'">{{ won ? 'You Win' : 'You Lose' }}</h2>
             </header>
             <main>
                 <ButtonMain @resume="$emit('resume')" text="continue" />
@@ -16,7 +16,11 @@
 
 <script setup>
 
-const $emit = defineEmits(['resume', 'newCategory' , 'quit']);
+const $emit = defineEmits(['continue', 'newCategory' , 'quit']);
+
+const props = defineProps({
+    won: Boolean
+})
 
 </script>
 <style lang="scss" scoped>
@@ -41,11 +45,11 @@ const $emit = defineEmits(['resume', 'newCategory' , 'quit']);
 
         .header {
             position: absolute;
-            font-size: 13.4rem;
+            font-size: 8rem;
             width: fit-content;
             line-height: 120%;
             letter-spacing: -0.005em;
-            top: -20%;
+            top: -10%;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -69,12 +73,32 @@ const $emit = defineEmits(['resume', 'newCategory' , 'quit']);
             
             
             .header {
-                top: -15%;
-                font-size: 9.6rem;
+                top: -10%;
+                font-size: 6rem;
             }
+            main {
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2.6rem;
+        }
         }
     }
     
+}
+
+@media screen and (max-width: $sm-breakpoint) {
+    
+    .background {
+        
+        .container {
+            
+            header{
+                font-size: 6rem;
+            }
+        }
+    }
 }
 
 

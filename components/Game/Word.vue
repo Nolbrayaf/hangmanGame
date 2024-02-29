@@ -1,12 +1,12 @@
 <template>
     <div class="container-words">
-        <!-- Itérer sur chaque mot et inclure un espace après chaque mot sauf le dernier -->
+
         <div v-for="(word, wIndex) in gameWords" :key="'word-' + wIndex" class="word-group">
             <div class="container-word">
                 <GameWordLetter v-for="(letter, lIndex) in word.split('')" :key="'letter-' + wIndex + '-' + lIndex"
                     :letter="letter" :isCorrect = "correctLetters.includes(letter)" />
             </div>
-            <!-- Conditionnellement ajouter un espace après chaque mot, sauf le dernier -->
+
             <GameWordLetter v-if="wIndex < gameWords.length - 1" :key="'space-' + wIndex" letter=" " />
         </div>
     </div>

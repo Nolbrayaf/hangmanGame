@@ -1,27 +1,36 @@
 
 <template>
-    <div v-if="gameWord && category && alphabet" class="container-game">
-        <header>
-            <div class="header-left-section">
-                <ButtonMenu @pause="showPauseMenu = true" />
-                <h2 class="headingL" :data-text="category">{{ category }}</h2>
-            </div>
-            <div class="header-right-section">
-                <GameHpbar :hpLeft="hpLeft" />
-                <img src="~/assets/images/icons/heart.svg" alt="Heart">
-            </div>
+    <div class="container">
+        <div v-if="gameWord && category && alphabet" class="container-game">
+            <header>
+                <div class="header-left-section">
+                    <ButtonMenu @pause="showPauseMenu = true" />
+                    <h2 class="headingL" :data-text="category">{{ category }}</h2>
+                </div>
+                <div class="header-right-section">
+                    <GameHpbar :hpLeft="hpLeft" />
+                    <img src="~/assets/images/icons/heart.svg" alt="Heart">
+                </div>
 
-        </header>
+            </header>
 
-        <GameWord v-if="gameWord" :gameWord="gameWord" :correctLetters="correctLetters" />
+            <GameWord v-if="gameWord" :gameWord="gameWord" :correctLetters="correctLetters" />
 
-        <GameBoard :alphabet="alphabet" @clickLetter="handleClickLetter" />
+            <GameBoard :alphabet="alphabet" @clickLetter="handleClickLetter" :usedLetters="usedLetters" />
+        </div>
+        <div class="degradBackground"></div>
+        <transition name="fade" mode="out-in">
+            <GamePauseMenu v-if="showPauseMenu" @newCategory="handleNewCategory" @resume="handleResume" @quit="handleQuit"
+                class="pause-menu" />
+
+        </transition>
+
+        <transition name="fade" mode="out-in">
+            <GameEndMenu v-if="gameOutCome !== null" :won="gameOutCome" @newCategory="handleNewCategory" @quit="handleQuit"
+                class="end-menu" />
+
+        </transition>
     </div>
-    <div class="degradBackground"></div>
-<transition name="fade">
-    <GamePauseMenu v-if="showPauseMenu" @newCategory="handleNewCategory"  @resume="handleResume" class="pause-menu" />
-
-</transition>
 </template>
 <script setup>
 const props = defineProps({
@@ -32,67 +41,99 @@ const props = defineProps({
 
 })
 
-const $emit = defineEmits(['newCategory']);
+const $emit = defineEmits(['newCategory', 'quit']);
 
 const showPauseMenu = ref(false);
 const hpLeft = ref(8);
 const correctLetters = ref([]);
+const usedLetters = ref([]);
+const gameOutcome = ref(null);
+
 
 function handleClickLetter(letter) {
     if (props.gameWord.includes(letter) && !correctLetters.value.includes(letter)) {
         correctLetters.value.push(letter);
+
+
+
     } else {
         if (!correctLetters.value.includes(letter)) {
 
             hpLeft.value -= 1
+
         }
     }
-    console.log(correctLetters.value)
+    usedLetters.value.push(letter);
+
+    checkGameOutcome();
+
+}
+
+function checkGameOutcome() {
+    const uniqueGameWordLetters = [...new Set(props.gameWord.split(""))];
+    const allLettersFound = uniqueGameWordLetters.every(letter => correctLetters.value.includes(letter));
+    if (allLettersFound) {
+        gameOutcome.value = "true";
+    } else if (hpLeft.value === 0) {
+        gameOutcome.value = "false";
+    }
 }
 
 const handleNewCategory = () => {
-  showPauseMenu.value = false;
-  $emit('newCategory');
+    gameOutcome.value = null;
+    $emit('newCategory');
 };
 
+const handleQuit = () => {
+    gameOutcome.value = null;
+    $emit('quit');
+}
+
 const handleResume = () => {
-  showPauseMenu.value = false;
+    showPauseMenu.value = false;
 };
 
 
 </script>
 <style lang="scss" scoped>
-.container-game {
+.container {
+    position: relative;
     width: 100%;
     height: 100%;
-    padding: 2.4rem 11.2rem 0 11.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 5rem;
 
-    header {
-        color: $white;
-        display: flex;
-        justify-content: space-between;
+    .container-game {
+
         width: 100%;
+        height: 100%;
+        padding: 2.4rem 11.2rem 0 11.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
 
-
-        .header-left-section {
+        header {
+            color: $white;
             display: flex;
-            align-items: center;
-            gap: 5.7rem;
+            justify-content: space-between;
+            width: 100%;
 
-            h2 {
-                margin: 0;
+
+            .header-left-section {
+                display: flex;
+                align-items: center;
+                gap: 5.7rem;
+
+                h2 {
+                    margin: 0;
+                }
+
             }
 
-        }
+            .header-right-section {
+                display: flex;
+                align-items: center;
+                gap: 4rem;
 
-        .header-right-section {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-
+            }
         }
     }
 }
@@ -119,6 +160,14 @@ const handleResume = () => {
     bottom: 0px;
 }
 
+.end-menu {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s ease;
@@ -132,16 +181,18 @@ const handleResume = () => {
 
 
 @media screen and (max-width: $desktop-breakpoint) {
-    .container-game {
-        padding: 2.4rem 5rem;
-        justify-content: space-between;
+    .container {
+        .container-game {
+            padding: 2.4rem 5rem;
+            justify-content: space-between;
 
-        header {
-            .header-left-section {
-                gap: 4rem;
+            header {
+                .header-left-section {
+                    gap: 4rem;
 
-                h2 {
-                    font-size: 4.8rem;
+                    h2 {
+                        font-size: 4.8rem;
+                    }
                 }
             }
         }
@@ -149,15 +200,17 @@ const handleResume = () => {
 }
 
 @media screen and (max-width: 992px) {
-    .container-game {
-        padding: 2.4rem;
+    .container {
+        .container-game {
+            padding: 2.4rem;
 
-        header {
-            .header-left-section {
-                gap: 3.2rem;
+            header {
+                .header-left-section {
+                    gap: 3.2rem;
 
-                h2 {
-                    font-size: 4.8rem;
+                    h2 {
+                        font-size: 4.8rem;
+                    }
                 }
             }
         }
@@ -166,25 +219,27 @@ const handleResume = () => {
 }
 
 @media screen and (max-width: $tablet-breakpoint) {
-    .container-game {
+    .container {
+        .container-game {
 
-        padding: 1.2rem;
+            padding: 1.2rem;
 
-        header {
-            .header-left-section {
-                gap: 1.6rem;
+            header {
+                .header-left-section {
+                    gap: 1.6rem;
 
-                h2 {
-                    font-size: 3.2rem;
+                    h2 {
+                        font-size: 3.2rem;
+                    }
                 }
-            }
 
-            .header-right-section {
-                gap: 1.6rem;
+                .header-right-section {
+                    gap: 1.6rem;
 
-                img {
-                    width: 4.8rem;
-                    height: 4.8rem;
+                    img {
+                        width: 4.8rem;
+                        height: 4.8rem;
+                    }
                 }
             }
         }

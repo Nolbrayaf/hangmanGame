@@ -8,11 +8,10 @@ const props = defineProps({
     text: String
 })
 
-const $emit = defineEmits(['resume', 'newCategory', 'howToPlay']);
+const $emit = defineEmits(['quit']);
 const emitEvents = () => {
-  $emit('resume');
-  $emit('newCategory');
-  $emit('howToPlay');
+    $emit('quit');
+
 };
 
 </script>
@@ -24,7 +23,7 @@ button {
     margin: 0;
     padding: 0;
     border: none;
-    background: none;
+    background: $pink-gradient;
     box-shadow: none;
     font-family: inherit;
     color: inherit;
@@ -35,8 +34,7 @@ button {
     padding: 1.2rem 6.4rem;
     color: $white;
     border-radius: 40px;
-    box-shadow: inset 0 -2px 0 3px #140E66, inset 0 1px 0 6px #3C74FF;
-    background-color: $blue;
+    box-shadow: inset 0px -2px 0px 3px #140E66, inset 0px 1px 0px 6px #C642FB;
     text-align: center;
     cursor: pointer;
 
@@ -74,3 +72,4 @@ button {
     
 }
 </style>
+

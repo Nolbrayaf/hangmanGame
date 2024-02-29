@@ -1,22 +1,18 @@
 <template>
   <main>
 
-    <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in"   @before-enter="onBeforeEnter"
+  @after-enter="onAfterEnter">
 
-      <HowToPlayMain v-if="showRules" @back="showRules = false" key="rules" />
+      <HowToPlayMain v-if="showComponent === 'howToPlay'" @back="showComponent = ''" key="rules" />
 
-      <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories"
+      <CategoriesMain v-else-if="showComponent === 'categories'" @back="showComponent = ''" key="categories"
         @choose="handleCategoryChoose" />
 
-      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" @newCategory="handleNewCategory"  :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()" />
+      <GameMain v-else-if="showComponent === 'game' && gameWord" key="game" :category="choosenCategory"
+        @newCategory="handleNewCategory" @quit="showComponent = ''" :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()"  />
 
-      <div v-else class="main-container" key="main">
-        <img class="logo" src="../assets/images/logo.svg" alt="Logo">
-        <div class="buttons">
-          <ButtonPlay @play="showCategories = true" />
-          <ButtonMain text="how to play" @click="showRules = true" />
-        </div>
-      </div>
+      <Welcome v-else key="welcome" @howToPlay="showComponent = 'howToPlay'" @play="showComponent = 'categories'" />
     </transition>
 
   </main>
@@ -25,21 +21,22 @@
 <script setup>
 import { categories } from '~/data.json'
 
-const showRules = ref(false);
-const showCategories = ref(false);
-const showGame = ref(false);
-const gameWord = ref("The Lion king");
-const choosenCategory = ref("Country");
+
+
+const gameWord = ref("");
+const choosenCategory = ref("");
+
+const showComponent = ref("")
 
 const handleNewCategory = () => {
-  showGame.value = false;
-  showCategories.value = true;
+  choosenCategory.value = ""
+  gameWord.value = ""
+  showComponent.value = "categories"
 
-  console.log(showCategories.value)
+console.log(showComponent.value)
 }
 function handleCategoryChoose(category) {
-  showCategories.value = false;
-  showGame.value = true;
+  showComponent.value = "game";
   choosenCategory.value = category;
   randomWord(category);
 
@@ -66,7 +63,13 @@ function generateAlphabet() {
   }
   return alphabet;
 }
+function onBeforeEnter(el) {
+  console.log("Transition start for", el);
+}
 
+function onAfterEnter(el) {
+  console.log("Transition end for", el);
+}
 
 
 

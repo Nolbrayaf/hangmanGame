@@ -1,7 +1,6 @@
 
 <template>
 
-    
     <div v-if="isCorrect || letter === ' '" :class="letter !== ' ' ? 'letter headingL' : 'space'">
         {{ letter.toUpperCase() }}
     </div>

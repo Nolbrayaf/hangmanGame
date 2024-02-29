@@ -1,6 +1,6 @@
 <template >
     <article>
-        <div class="title">
+        <div class="titleNb">
             <h3 class="headingL">{{ rule.id }}</h3>
             <h4 class="headingM">{{ rule.title }}</h4>
         </div>
@@ -24,7 +24,7 @@ defineProps({
 article {
 
 
-    .title {
+    .titleNb {
         h4 {
             display: none
         }
@@ -101,7 +101,7 @@ article {
 
         gap: 2rem;
 
-        .title {
+        .titleNb {
             display: flex;
 
             gap: 1.6rem;
