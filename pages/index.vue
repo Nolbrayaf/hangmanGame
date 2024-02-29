@@ -3,20 +3,8 @@
 
     <transition name="fade" mode="out-in">
 
-      <HowToPlayMain v-if="showRules" @back="showRules = false" key="rules" />
+      <component :is="getComponent(currentComponent)" v-bind="componentData" />
 
-      <CategoriesMain v-else-if="showCategories" @back="showCategories = false" key="categories"
-        @choose="handleCategoryChoose" />
-
-      <GameMain v-else-if="showGame && gameWord" key="game" :category="choosenCategory" @newCategory="handleNewCategory"  :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()" />
-
-      <div v-else class="main-container" key="main">
-        <img class="logo" src="../assets/images/logo.svg" alt="Logo">
-        <div class="buttons">
-          <ButtonPlay @play="showCategories = true" />
-          <ButtonMain text="how to play" @click="showRules = true" />
-        </div>
-      </div>
     </transition>
 
   </main>
@@ -24,25 +12,52 @@
 
 <script setup>
 import { categories } from '~/data.json'
+import HowToPlayMain from '~/components/HowToPlay/Main.vue';
+import CategoriesMain from '~/components/Categories/Main.vue';
+import GameMain from '~/components/Game/Main.vue';
+import Welcome from '~/components/Welcome.vue';
 
-const showRules = ref(false);
-const showCategories = ref(false);
-const showGame = ref(false);
+const currentComponent = ref(Welcome);
+
+const componentData = ref({
+  onPlay: switchToCategories,
+  onHowToPlay: switchToRules
+});
+
 const gameWord = ref("The Lion king");
 const choosenCategory = ref("Country");
 
-const handleNewCategory = () => {
-  showGame.value = false;
-  showCategories.value = true;
 
-  console.log(showCategories.value)
-}
+const handleNewCategory = () => {
+  currentComponent.value = 'CategoriesMain';
+  componentData.value = {
+    key: 'categories',
+    onBack: () => currentComponent.value = 'Welcome',
+    onChoose: handleCategoryChoose,
+  };
+};
+
 function handleCategoryChoose(category) {
-  showCategories.value = false;
-  showGame.value = true;
   choosenCategory.value = category;
   randomWord(category);
+  currentComponent.value = 'GameMain';
+  componentData.value = {
+    key: 'game',
+    category: choosenCategory.value,
+    gameWord: gameWord.value.toLocaleUpperCase(),
+    alphabet: generateAlphabet(),
+    onNewCategory: handleNewCategory,
+  };
+}
 
+function switchToCategories() {
+  currentComponent.value = CategoriesMain;
+  componentData.value = { key: 'categories' };
+}
+
+function switchToRules() {
+  currentComponent.value = HowToPlayMain;
+  componentData.value = { key: 'rules' };
 }
 
 function wordsByCategory(data) {
@@ -67,7 +82,14 @@ function generateAlphabet() {
   return alphabet;
 }
 
-
+const getComponent = (componentName) => {
+  switch (componentName) {
+    case 'HowToPlayMain': return HowToPlayMain;
+    case 'CategoriesMain': return CategoriesMain;
+    case 'GameMain': return GameMain;
+    default: return Welcome;
+  }
+};
 
 
 </script>
@@ -78,35 +100,6 @@ main {
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  //Main Menu
-  .main-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 6.4rem;
-    background: $blue-gradient;
-    width: 59.2rem;
-    height: 50rem;
-    border-radius: 72px;
-    box-shadow: inset 0 -8px 0 4px #140E66, inset 0 6px 0 8px #2463FF;
-
-    .logo {
-      position: absolute;
-      top: -20%;
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 3.2rem;
-      padding-bottom: 6.4rem;
-    }
-  }
 }
 
 .fade-enter-active,
@@ -118,30 +111,6 @@ main {
 .fade-leave-to {
   opacity: 0;
 
-}
-
-
-
-@media screen and (max-width: $sm-breakpoint) {
-  main {
-    .main-container {
-
-      justify-content: center;
-      padding-top: 6.4rem;
-      width: 32.4rem;
-      height: 48.1rem;
-
-      .buttons {
-        gap: 6.4rem;
-      }
-
-      .logo {
-        width: 20rem;
-        top: -10%;
-
-      }
-    }
-  }
 }
 </style>
 

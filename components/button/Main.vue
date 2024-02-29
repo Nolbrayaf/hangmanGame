@@ -8,10 +8,11 @@ const props = defineProps({
     text: String
 })
 
-const $emit = defineEmits(['resume', 'newCategory']);
+const $emit = defineEmits(['resume', 'newCategory' , 'howToPlay']);
 const emitEvents = () => {
   $emit('resume');
   $emit('newCategory');
+  $emit('howToPlay');
 };
 
 </script>

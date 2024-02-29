@@ -7,6 +7,8 @@
 
 <script setup>
 
+const $emit = defineEmits(['play']);
+
 </script>
 
 <style lang="scss" scoped>
