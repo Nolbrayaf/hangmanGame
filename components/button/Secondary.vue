@@ -3,6 +3,7 @@
     <button class="headingS" @click="emitEvents">{{ props.text.toUpperCase() }}</button>
 </template>
 <script setup>
+import clickSound from '@/assets/sounds/clickBubble.wav';
 
 const props = defineProps({
     text: String
@@ -10,6 +11,13 @@ const props = defineProps({
 
 const $emit = defineEmits(['quit']);
 const emitEvents = () => {
+
+
+    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
+        const clickAudio = new Audio(clickSound);
+        clickAudio.volume = 0.2;
+        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
+    }
     $emit('quit');
 
 };
@@ -65,11 +73,11 @@ button {
 @media screen and (max-width: $sm-breakpoint) {
 
     button {
-        
+
         padding: 1.2rem 4.8rem;
         font-size: 2.4rem;
     }
-    
+
 }
 </style>
 

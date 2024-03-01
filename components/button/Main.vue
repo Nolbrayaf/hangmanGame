@@ -4,12 +4,20 @@
 </template>
 <script setup>
 
+import clickSound from '@/assets/sounds/clickBubble.wav';
+
 const props = defineProps({
     text: String
 })
 
+
 const $emit = defineEmits(['resume', 'newCategory', 'howToPlay', 'newGame']);
 const emitEvents = () => {
+    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
+        const clickAudio = new Audio(clickSound);
+        clickAudio.volume = 0.2;
+        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
+    }
     $emit('resume');
     $emit('newCategory');
     $emit('howToPlay');

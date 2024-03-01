@@ -74,9 +74,9 @@ function checkGameOutcome() {
     const uniqueGameWordLetters = [...new Set(props.gameWord.split(""))];
     const allLettersFound = uniqueGameWordLetters.every(letter => correctLetters.value.includes(letter));
     if (allLettersFound) {
-        gameOutcome.value = "true";
+        gameOutcome.value = true;
     } else if (hpLeft.value === 0) {
-        gameOutcome.value = "false";
+        gameOutcome.value = false;
     }
 }
 

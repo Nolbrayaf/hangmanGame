@@ -1,17 +1,30 @@
 
 <template>
-    <button @click="$emit('pause')">
+    <button @click="emitEvent">
         <img src="~/assets/images/icons/menu.svg" alt="Play">
     </button>
 </template>
 
 <script setup>
+import clickSound from '@/assets/sounds/clickBubble.wav';
+
+const $emit = defineEmits(['pause'])
+
+function emitEvent() {
+
+    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
+        const clickAudio = new Audio(clickSound);
+        clickAudio.volume = 0.2;
+        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
+    }
+    $emit('pause')
+}
 
 </script>
 
 <style lang="scss" scoped>
 button {
-    position:relative;
+    position: relative;
     margin: 0;
     padding: 0;
     border: none;
@@ -20,7 +33,7 @@ button {
     font-family: inherit;
     color: inherit;
     background: $pink-gradient;
-    box-shadow:  inset 0 -6px 0 7px rgba(157,45,245,0.25);
+    box-shadow: inset 0 -6px 0 7px rgba(157, 45, 245, 0.25);
     border-radius: 999px;
     width: 9.4rem;
     height: 9.4rem;
@@ -51,11 +64,11 @@ button {
 }
 
 @media screen and (max-width: $desktop-breakpoint) {
-    button{
+    button {
         width: 6.4rem;
         height: 6.4rem;
 
-        img{
+        img {
             width: 2.5rem;
             height: 2.1rem;
         }
@@ -63,11 +76,11 @@ button {
 }
 
 @media screen and (max-width: $tablet-breakpoint) {
-    button{
+    button {
         width: 4.8rem;
         height: 4.8rem;
 
-        img{
+        img {
             width: 2rem;
             height: 1.6rem;
         }

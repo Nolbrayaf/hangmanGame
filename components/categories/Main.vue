@@ -7,15 +7,29 @@
             <div class="empty"></div>
         </div>
         <section class="categories">
-            <categoriesCategory v-for="category in categoryNames" :category="category" :key="category" class="category" @click="$emit('choose', category)" />
+            <categoriesCategory v-for="category in categoryNames" :category="category" :key="category" class="category"
+                @click="() => handleCategoryChoose(category)" />
         </section>
         <div class="degradBackground"></div>
     </div>
 </template>
 <script setup>
 import { categories } from '~/data.json'
+import clickSound from '@/assets/sounds/clickBubble.wav';
 
 const categoryNames = ref(Object.keys(categories))
+
+const $emit = defineEmits(['back', 'choose']);
+
+function handleCategoryChoose(category) {
+    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
+        const clickAudio = new Audio(clickSound);
+        clickAudio.volume = 0.2;
+        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
+    }
+    $emit('choose', category)
+
+}
 
 </script>
 <style lang="scss" scoped>
@@ -87,12 +101,13 @@ const categoryNames = ref(Object.keys(categories))
     .container-categories {
 
         justify-content: space-evenly;
+
         .header-categories {
 
             .title {
                 font-size: 48px;
             }
-            
+
 
         }
 
@@ -140,9 +155,10 @@ const categoryNames = ref(Object.keys(categories))
                 width: 40px;
                 justify-self: start;
             }
+
             .title {
                 font-size: 36px;
-                
+
             }
 
             .empty {
@@ -153,5 +169,4 @@ const categoryNames = ref(Object.keys(categories))
 
     }
 
-}
-</style>
+}</style>

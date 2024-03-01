@@ -16,17 +16,33 @@
     </transition>
 
   </main>
+  <audio id="ambianceMusic" :src="ambianceMusic" loop></audio>
+
+  <ButtonSound v-if="showComponent === ''" class="sound" @playSound="playSound" :playSound="isSoundPLaying" />
+
 </template>
 
 <script setup>
+
+import ambianceMusic from '~/assets/sounds/ambiance.mp3';
 import { categories } from '~/data.json'
 
 
 
 const gameWord = ref("");
 const choosenCategory = ref("");
-
 const showComponent = ref("")
+const isSoundPLaying = ref(false);
+
+const playSound = () => {
+  const audio = document.getElementById("ambianceMusic");
+  isSoundPLaying.value = !isSoundPLaying.value
+  if (isSoundPLaying.value) {
+    audio.play();
+  }else{
+    audio.pause();
+  }
+}
 
 const handleNewGame = () => {
   randomWord(choosenCategory.value)
@@ -126,7 +142,11 @@ main {
 
 }
 
-
+.sound {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
 
 @media screen and (max-width: $sm-breakpoint) {
   main {

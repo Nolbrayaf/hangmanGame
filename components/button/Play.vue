@@ -1,11 +1,25 @@
 
 <template>
-    <button @click="$emit('play')">
+    <button @click="emitEvent">
         <img src="~/assets/images/icons/play.svg" alt="Play">
     </button>
 </template>
 
 <script setup>
+
+import clickSound from '@/assets/sounds/clickBubble.wav';
+
+const $emit = defineEmits(['play']);
+
+function emitEvent() {
+
+    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
+        const clickAudio = new Audio(clickSound);
+        clickAudio.volume = 0.2;
+        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
+    }
+    $emit('play')
+}
 
 </script>
 
