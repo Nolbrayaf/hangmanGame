@@ -1,11 +1,11 @@
 <template>
-    <div class="background">
+    <div class="background" >
         <div class="container">
             <header class="header">
                 <h2 class="title" :data-text=" won ? 'You Win' : 'You Lose'">{{ won ? 'You Win' : 'You Lose' }}</h2>
             </header>
             <main>
-                <ButtonMain @resume="$emit('resume')" text="continue" />
+                <ButtonMain @newGame="$emit('newGame')" text="continue" />
                 <ButtonMain @newCategory="$emit('newCategory')" text="new category" />
                 <ButtonSecondary @quit="$emit('quit')" text="quit game" />
             </main>
@@ -16,7 +16,7 @@
 
 <script setup>
 
-const $emit = defineEmits(['continue', 'newCategory' , 'quit']);
+const $emit = defineEmits(['newGame', 'newCategory' , 'quit']);
 
 const props = defineProps({
     won: Boolean

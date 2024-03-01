@@ -10,7 +10,7 @@
         @choose="handleCategoryChoose" />
 
       <GameMain v-else-if="showComponent === 'game' && gameWord" key="game" :category="choosenCategory"
-        @newCategory="handleNewCategory" @quit="showComponent = ''" :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()"  />
+        @newCategory="handleNewCategory" @quit="showComponent = ''" :gameWord="gameWord.toLocaleUpperCase()" :alphabet="generateAlphabet()" @newGame="handleNewGame"  />
 
       <Welcome v-else key="welcome" @howToPlay="showComponent = 'howToPlay'" @play="showComponent = 'categories'" />
     </transition>
@@ -28,17 +28,20 @@ const choosenCategory = ref("");
 
 const showComponent = ref("")
 
+const handleNewGame = () => {
+  randomWord(choosenCategory.value)
+  showComponent.value = "game"
+}
 const handleNewCategory = () => {
   choosenCategory.value = ""
   gameWord.value = ""
   showComponent.value = "categories"
 
-console.log(showComponent.value)
 }
 function handleCategoryChoose(category) {
-  showComponent.value = "game";
   choosenCategory.value = category;
   randomWord(category);
+  showComponent.value = "game";
 
 }
 

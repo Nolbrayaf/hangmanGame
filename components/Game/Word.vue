@@ -71,7 +71,7 @@ const gameWords = computed(() => props.gameWord.split(" "))
 
         .word-group {
             .container-word {
-                gap: 1rem;
+                gap: 0.5rem;
             }
 
         }

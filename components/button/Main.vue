@@ -8,11 +8,12 @@ const props = defineProps({
     text: String
 })
 
-const $emit = defineEmits(['resume', 'newCategory', 'howToPlay']);
+const $emit = defineEmits(['resume', 'newCategory', 'howToPlay', 'newGame']);
 const emitEvents = () => {
-  $emit('resume');
-  $emit('newCategory');
-  $emit('howToPlay');
+    $emit('resume');
+    $emit('newCategory');
+    $emit('howToPlay');
+    $emit('newGame');
 };
 
 </script>
@@ -67,10 +68,10 @@ button {
 @media screen and (max-width: $sm-breakpoint) {
 
     button {
-        
+
         padding: 1.2rem 4.8rem;
         font-size: 2.4rem;
     }
-    
+
 }
 </style>

@@ -26,8 +26,8 @@
         </transition>
 
         <transition name="fade" mode="out-in">
-            <GameEndMenu v-if="gameOutCome !== null" :won="gameOutCome" @newCategory="handleNewCategory" @quit="handleQuit"
-                class="end-menu" />
+            <GameEndMenu v-if="gameOutcome !== null" :won="gameOutcome" @newGame="handleNewGame"
+                @newCategory="handleNewCategory" @quit="handleQuit" class="end-menu" />
 
         </transition>
     </div>
@@ -41,7 +41,7 @@ const props = defineProps({
 
 })
 
-const $emit = defineEmits(['newCategory', 'quit']);
+const $emit = defineEmits(['newCategory', 'quit', 'newGame']);
 
 const showPauseMenu = ref(false);
 const hpLeft = ref(8);
@@ -69,6 +69,7 @@ function handleClickLetter(letter) {
 
 }
 
+
 function checkGameOutcome() {
     const uniqueGameWordLetters = [...new Set(props.gameWord.split(""))];
     const allLettersFound = uniqueGameWordLetters.every(letter => correctLetters.value.includes(letter));
@@ -81,17 +82,31 @@ function checkGameOutcome() {
 
 const handleNewCategory = () => {
     gameOutcome.value = null;
+    hpLeft.value = 8;
+    correctLetters.value = [];
+    usedLetters.value = [];
     $emit('newCategory');
 };
 
 const handleQuit = () => {
     gameOutcome.value = null;
+    hpLeft.value = 8;
+    correctLetters.value = [];
+    usedLetters.value = [];
     $emit('quit');
 }
 
 const handleResume = () => {
     showPauseMenu.value = false;
 };
+
+const handleNewGame = () => {
+    hpLeft.value = 8;
+    correctLetters.value = [];
+    usedLetters.value = [];
+    gameOutcome.value = null;
+    $emit('newGame');
+}
 
 
 </script>
@@ -161,11 +176,11 @@ const handleResume = () => {
 }
 
 .end-menu {
-        position: absolute;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        bottom: 0px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
 }
 
 .fade-enter-active,
