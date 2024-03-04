@@ -71,7 +71,7 @@ function handleClickLetter(letter) {
 
 
 function checkGameOutcome() {
-    const uniqueGameWordLetters = [...new Set(props.gameWord.split(""))];
+    const uniqueGameWordLetters = [...new Set(props.gameWord.split("").filter(letter => letter !== " "))];
     const allLettersFound = uniqueGameWordLetters.every(letter => correctLetters.value.includes(letter));
     if (allLettersFound) {
         gameOutcome.value = true;

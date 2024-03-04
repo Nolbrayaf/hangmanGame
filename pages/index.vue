@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main translate="no">
 
     <transition name="fade" mode="out-in"   @before-enter="onBeforeEnter"
   @after-enter="onAfterEnter">
@@ -26,7 +26,6 @@
 
 import ambianceMusic from '~/assets/sounds/ambiance.mp3';
 import { categories } from '~/data.json'
-
 
 
 const gameWord = ref("");

@@ -2,9 +2,9 @@
     <div class="container-words">
 
         <div v-for="(word, wIndex) in gameWords" :key="'word-' + wIndex" class="word-group">
-            <div class="container-word">
+            <div class="container-word"  >
                 <GameWordLetter v-for="(letter, lIndex) in word.split('')" :key="'letter-' + wIndex + '-' + lIndex"
-                    :letter="letter" :isCorrect = "correctLetters.includes(letter)" />
+                    :letter="letter" :isCorrect = "correctLetters.includes(letter)" :containsLongWord="containsLongWord" />
             </div>
 
             <GameWordLetter v-if="wIndex < gameWords.length - 1" :key="'space-' + wIndex" letter=" " />
@@ -20,6 +20,10 @@ const props = defineProps({
 })
 
 const gameWords = computed(() => props.gameWord.split(" "))
+
+const containsLongWord = computed(() => {
+  return gameWords.value.some(word => word.length >= 9);
+});
 
 
 </script>
@@ -41,6 +45,7 @@ const gameWords = computed(() => props.gameWord.split(" "))
             align-items: center;
 
         }
+
     }
 }
 
@@ -50,13 +55,16 @@ const gameWords = computed(() => props.gameWord.split(" "))
         .container-word {}
 
     }
+
+    
+
 }
 
 @media screen and (max-width: 992px) {
     .container-words {
         .word-group {
             .container-word {
-                gap: 1rem;
+                gap: 0.8rem;
             }
 
         }
@@ -71,7 +79,7 @@ const gameWords = computed(() => props.gameWord.split(" "))
 
         .word-group {
             .container-word {
-                gap: 0.5rem;
+                gap: 0.2rem;
             }
 
         }
