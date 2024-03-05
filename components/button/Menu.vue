@@ -1,4 +1,3 @@
-
 <template>
     <button @click="emitEvent">
         <img src="~/assets/images/icons/menu.svg" alt="Play">
@@ -6,17 +5,13 @@
 </template>
 
 <script setup>
-import clickSound from '@/assets/sounds/clickBubble.wav';
+import { useAudio } from '~/useAudio';
 
 const $emit = defineEmits(['pause'])
 
 function emitEvent() {
 
-    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
-        const clickAudio = new Audio(clickSound);
-        clickAudio.volume = 0.2;
-        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
-    }
+    useAudio()
     $emit('pause')
 }
 

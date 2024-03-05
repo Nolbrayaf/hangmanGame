@@ -7,7 +7,7 @@
             <div class="empty"></div>
         </div>
         <section class="categories">
-            <categoriesCategory v-for="category in categoryNames" :category="category" :key="category" class="category"
+            <ButtonCategory v-for="category in categoryNames" :category="category" :key="category" class="category"
                 @click="() => handleCategoryChoose(category)" />
         </section>
         <div class="degradBackground"></div>
@@ -15,18 +15,15 @@
 </template>
 <script setup>
 import { categories } from '~/data.json'
-import clickSound from '@/assets/sounds/clickBubble.wav';
+import {useAudio} from '~/useAudio';
 
 const categoryNames = ref(Object.keys(categories))
 
 const $emit = defineEmits(['back', 'choose']);
 
 function handleCategoryChoose(category) {
-    if (typeof window !== "undefined" && typeof Audio !== "undefined") {
-        const clickAudio = new Audio(clickSound);
-        clickAudio.volume = 0.2;
-        clickAudio.play().catch(e => console.error("Erreur lors de la lecture de l'audio:", e));
-    }
+
+    useAudio()
     $emit('choose', category)
 
 }
